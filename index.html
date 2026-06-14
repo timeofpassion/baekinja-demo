@@ -203,7 +203,7 @@ footer { background:var(--plum-d); color:#B98AA0; text-align:center; padding:34p
           <textarea id="fRegret" rows="2" placeholder="쓰지 않아도 괜찮습니다"></textarea>
         </label>
         <label class="f">아이의 사진 <span style="color:var(--soft)">(선택 · 저장되지 않습니다)</span>
-          <div class="upload" id="upBox" onclick="document.getElementById('fPhoto').click()">사진 올리기</div>
+          <div class="upload" id="upBox">사진 올리기</div>
           <input type="file" id="fPhoto" accept="image/*" class="hidden">
         </label>
         <button class="btn btn-p" id="goBtn" style="width:100%" disabled onclick="generate()">답장 받기</button>
@@ -311,10 +311,18 @@ function check() {
   document.getElementById('goBtn').disabled = !ok;
   document.getElementById('goBtn').textContent = (fName.value.trim()||'아이') + '의 답장 받기';
 }
+// 같은 파일을 다시 골라도 change 가 발생하도록, 선택창 열기 직전 value 초기화
+document.getElementById('fPhoto').addEventListener('click', function(){ this.value=''; });
 document.getElementById('fPhoto').addEventListener('change', e => {
   const f = e.target.files[0]; if (!f) return;
   const r = new FileReader();
-  r.onload = () => { photoData = r.result; const u = document.getElementById('upBox'); u.textContent='사진이 준비됐어요 ✓'; u.classList.add('ok'); };
+  r.onload = () => {
+    photoData = r.result;
+    const u = document.getElementById('upBox');
+    u.classList.add('ok');
+    u.innerHTML = '<img src="' + photoData + '" alt="아이 사진 미리보기" style="width:56px;height:56px;border-radius:50%;object-fit:cover;border:2px solid #fff;box-shadow:0 2px 8px rgba(109,46,70,.22);vertical-align:middle;margin-right:10px">'
+      + '<span style="vertical-align:middle">사진이 준비됐어요 ✓<br><span style="font-size:11.5px;color:var(--soft)">다시 누르면 사진을 바꿀 수 있어요</span></span>';
+  };
   r.readAsDataURL(f);
 });
 
