@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>백인자 — 너와 함께한 날들</title>
+<meta name="description" content="수학자 백인자의 시집 『너와 함께한 날들 — 5,765일』 공식 홈페이지. 당신의 아이가 보내는 답장을 받아보세요.">
+<meta property="og:title" content="너와 함께한 날들 — 백인자">
+<meta property="og:description" content="상실의 고통을 숫자로 계산할 수 있다면, 나는 조금이라도 덜 아플까. — 당신의 아이가 보내는 답장을 받아보세요.">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700&family=Noto+Sans+KR:wght@300;400;500&display=swap');
+* { box-sizing:border-box; margin:0; padding:0; }
+:root {
+  --paper:#FBF7F3; --ink:#4A2E44; --plum:#6D2E46; --plum-d:#4A1E32;
+  --rose:#C98DA6; --lilac:#B89BC4; --blush:#F2DEE6; --mauve:#8A6B85; --soft:#A98BA4;
+}
+html { scroll-behavior:smooth; }
+body { background:var(--paper); color:var(--ink); font-family:'Noto Sans KR',sans-serif; overflow-x:hidden; }
+.serif { font-family:'Noto Serif KR',serif; }
+section { padding:90px 20px; position:relative; }
+.wrap { max-width:880px; margin:0 auto; }
+h2.sec { font-family:'Noto Serif KR',serif; font-size:clamp(24px,4vw,32px); color:var(--plum); text-align:center; margin-bottom:14px; font-weight:600; }
+.sec-sub { text-align:center; font-size:14px; font-weight:300; color:var(--mauve); margin-bottom:48px; line-height:1.8; }
+.reveal { opacity:0; transform:translateY(28px); transition:all .8s ease; }
+.reveal.on { opacity:1; transform:translateY(0); }
+@keyframes drift { 0%{transform:translateY(0) rotate(0)} 50%{transform:translateY(-16px) rotate(9deg)} 100%{transform:translateY(0) rotate(0)} }
+@keyframes up { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+@keyframes pulse { 0%,100%{opacity:.3} 50%{opacity:1} }
+.petal { position:absolute; pointer-events:none; z-index:0; animation:drift 9s ease-in-out infinite; }
+
+/* nav */
+nav { position:fixed; top:0; left:0; right:0; z-index:100; display:flex; justify-content:space-between; align-items:center;
+  padding:14px 24px; background:rgba(251,247,243,.85); backdrop-filter:blur(10px); border-bottom:1px solid rgba(109,46,70,.08); }
+nav .logo { font-family:'Noto Serif KR',serif; font-weight:700; font-size:17px; color:var(--plum); text-decoration:none; }
+nav .menu { display:flex; gap:22px; }
+nav .menu a { font-size:13px; color:var(--mauve); text-decoration:none; transition:color .2s; }
+nav .menu a:hover { color:var(--plum); }
+@media(max-width:640px){ nav .menu a:not(.cta){ display:none; } }
+nav .cta { background:var(--plum); color:#fff !important; padding:8px 16px; border-radius:20px; font-weight:500; }
+
+/* hero */
+#hero { min-height:100vh; display:flex; align-items:center; justify-content:center; text-align:center;
+  background:linear-gradient(170deg,#FCF6F8 0%,#F3E3EC 55%,#E4D3E8 100%); }
+#hero .quote { font-size:clamp(15px,2.4vw,19px); font-weight:300; color:var(--mauve); line-height:2; margin-bottom:28px; animation:up 1s ease both; }
+#hero h1 { font-family:'Noto Serif KR',serif; font-size:clamp(36px,7vw,58px); color:var(--plum); font-weight:700; margin-bottom:14px; animation:up 1s ease .2s both; }
+#hero .by { font-size:14px; color:var(--soft); letter-spacing:2px; margin-bottom:8px; animation:up 1s ease .3s both; }
+#hero .days { font-family:'Noto Serif KR',serif; font-size:clamp(16px,2.6vw,20px); color:var(--rose); margin-bottom:42px; animation:up 1s ease .4s both; }
+.btn { display:inline-block; padding:16px 34px; border-radius:30px; font-size:15px; font-weight:500; text-decoration:none; transition:all .25s; cursor:pointer; border:none; font-family:inherit; }
+.btn-p { background:var(--plum); color:#fff; }
+.btn-p:hover { background:var(--plum-d); transform:translateY(-2px); box-shadow:0 12px 28px rgba(109,46,70,.25); }
+.btn-o { background:transparent; color:var(--plum); border:1.5px solid var(--plum); margin-left:10px; }
+.btn-o:hover { background:var(--plum); color:#fff; }
+#hero .btns { animation:up 1s ease .55s both; }
+
+/* book */
+#book { background:var(--paper); }
+.points { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:20px; }
+.point { background:#fff; border:1px solid #EFE0E7; border-radius:18px; padding:32px 26px; box-shadow:0 14px 38px rgba(109,46,70,.07); }
+.point .n { font-family:'Noto Serif KR',serif; font-size:15px; color:var(--rose); font-weight:600; margin-bottom:12px; }
+.point h3 { font-family:'Noto Serif KR',serif; font-size:17.5px; color:var(--plum); margin-bottom:10px; font-weight:600; }
+.point p { font-size:13px; font-weight:300; color:var(--mauve); line-height:1.85; }
+
+/* letter service */
+#letter-svc { background:linear-gradient(165deg,#F8EDF3 0%,#EFE0EC 100%); }
+.svc-box { max-width:480px; margin:0 auto; text-align:center; }
+label.f { font-size:13px; color:var(--mauve); display:block; text-align:left; margin-bottom:14px; }
+input,textarea,select { width:100%; margin-top:6px; padding:13px 15px; font-size:15px; border:1.5px solid var(--blush); border-radius:12px; background:#fff; color:var(--ink); font-family:inherit; }
+input:focus,textarea:focus,select:focus { outline:none; border-color:var(--plum); }
+textarea { resize:none; line-height:1.6; }
+.upload { margin-top:6px; border:1.5px dashed var(--rose); border-radius:12px; padding:14px; text-align:center; cursor:pointer; background:#fff; color:var(--soft); font-size:14px; }
+.upload.ok { color:var(--plum); }
+.hidden { display:none !important; }
+.row2 { display:flex; gap:10px; }
+.card-l { background:linear-gradient(165deg,#FCF6F8,#F4E6EE 55%,#E9DAEC); border-radius:26px; padding:44px 28px 36px; box-shadow:0 26px 64px rgba(109,46,70,.18); }
+.photo-c { width:130px; height:130px; border-radius:50%; margin:0 auto 18px; border:5px solid #fff; box-shadow:0 8px 24px rgba(109,46,70,.2); background-size:cover; background-position:center; }
+.cn { font-family:'Noto Serif KR',serif; font-size:18px; color:var(--plum); font-weight:600; }
+.cd { font-family:'Noto Serif KR',serif; font-size:50px; font-weight:700; color:var(--ink); margin-bottom:14px; }
+.cd span { font-size:24px; margin-left:4px; }
+#llines { margin-top:18px; min-height:160px; }
+#llines p { font-family:'Noto Serif KR',serif; font-size:17px; color:#5A3E54; line-height:1.9; animation:up .8s ease both; }
+.bridge { font-size:13.5px; font-weight:300; color:var(--mauve); line-height:1.8; margin:26px 8px 16px; }
+.bridge b { font-family:'Noto Serif KR',serif; color:var(--plum); }
+.acts { display:flex; gap:9px; }
+.acts button { flex:1; padding:14px 6px; border-radius:12px; font-size:13px; font-weight:500; font-family:inherit; cursor:pointer; border:none; transition:opacity .2s; }
+.acts button:hover { opacity:.85; }
+.a1 { background:var(--plum); color:#fff; } .a2 { background:#fff; color:var(--plum); border:1.5px solid var(--plum)!important; } .a3 { background:var(--rose); color:#fff; }
+.reset { margin-top:14px; background:none; border:none; color:var(--soft); font-size:12.5px; text-decoration:underline; cursor:pointer; }
+.paw { width:20px; height:20px; }
+.note { font-size:11.5px; color:var(--soft); margin-top:16px; }
+
+/* author */
+#author { background:var(--paper); }
+.author-grid { display:grid; grid-template-columns:1fr 1.4fr; gap:44px; align-items:center; }
+@media(max-width:700px){ .author-grid{ grid-template-columns:1fr; } }
+.portrait { aspect-ratio:3/3.6; border-radius:20px; background:linear-gradient(160deg,#E9D6E2,#D8C2D8); display:flex; align-items:center; justify-content:center; color:var(--mauve); font-size:13px; box-shadow:0 20px 50px rgba(109,46,70,.12); }
+#author h3 { font-family:'Noto Serif KR',serif; font-size:24px; color:var(--plum); margin-bottom:6px; font-weight:600; }
+#author .role { font-size:13px; color:var(--rose); margin-bottom:20px; letter-spacing:1px; }
+#author p.bio { font-size:14px; font-weight:300; color:var(--mauve); line-height:2; margin-bottom:14px; }
+.bookshelf { margin-top:26px; display:flex; gap:14px; }
+.bk { flex:1; background:#fff; border:1px solid #EFE0E7; border-radius:14px; padding:18px; }
+.bk .t { font-family:'Noto Serif KR',serif; font-size:14.5px; font-weight:600; color:var(--plum); }
+.bk .s { font-size:11.5px; color:var(--soft); margin-top:6px; }
+
+/* reviews */
+#press { background:linear-gradient(180deg,#FBF7F3,#F6ECF1); }
+.reviews { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:18px; }
+.rv { background:#fff; border-radius:16px; padding:26px 22px; border:1px solid #EFE0E7; }
+.rv q { font-family:'Noto Serif KR',serif; font-size:14px; color:var(--ink); line-height:1.9; quotes:'“' '”'; }
+.rv .who { margin-top:14px; font-size:11.5px; color:var(--soft); }
+.press-note { margin-top:34px; text-align:center; font-size:12.5px; color:var(--soft); }
+
+/* buy */
+#buy { background:var(--plum); text-align:center; }
+#buy h2 { color:#fff; }
+#buy .sec-sub { color:#D9A8BC; }
+#buy .btn-w { background:#fff; color:var(--plum); margin:0 6px; }
+#buy .btn-w:hover { transform:translateY(-2px); box-shadow:0 12px 28px rgba(0,0,0,.25); }
+footer { background:var(--plum-d); color:#B98AA0; text-align:center; padding:34px 20px; font-size:12px; line-height:2; }
+.demo-badge { position:fixed; bottom:16px; left:16px; z-index:200; background:rgba(74,30,50,.92); color:#E8C7D5; font-size:11px; padding:8px 14px; border-radius:18px; letter-spacing:.5px; }
+</style>
+</head>
+<body>
+
+<svg style="display:none"><defs><g id="pawIcon">
+<ellipse cx="7" cy="7.5" rx="2.1" ry="2.7"/><ellipse cx="12" cy="6" rx="2.1" ry="2.7"/>
+<ellipse cx="17" cy="7.5" rx="2.1" ry="2.7"/>
+<path d="M12 11c-3.6 0-6.5 2.8-6.5 5.4 0 1.8 1.4 2.9 3 2.9 1.2 0 2.2-.6 3.5-.6s2.3.6 3.5.6c1.6 0 3-1.1 3-2.9C18.5 13.8 15.6 11 12 11z"/>
+</g>
+<g id="petalG"><path d="M20 4 C28 10,32 20,20 36 C8 20,12 10,20 4 Z"/></g></defs></svg>
+
+<div class="demo-badge">DEMO — 열정의시간 제작 가안</div>
+
+<nav>
+  <a class="logo" href="#hero">백인자</a>
+  <div class="menu">
+    <a href="#book">책 소개</a>
+    <a href="#author">작가</a>
+    <a href="#press">독자의 마음</a>
+    <a href="#buy">구매</a>
+    <a class="cta" href="#letter-svc">아이의 답장 받기</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <svg class="petal" viewBox="0 0 40 40" style="width:70px;top:14%;left:8%;fill:url(#)" ><use href="#petalG" fill="#E0B8CC" opacity=".5"/></svg>
+  <svg class="petal" viewBox="0 0 40 40" style="width:48px;top:68%;left:12%;animation-delay:1.2s"><use href="#petalG" fill="#C9A8D2" opacity=".45"/></svg>
+  <svg class="petal" viewBox="0 0 40 40" style="width:92px;top:16%;right:7%;animation-delay:.6s"><use href="#petalG" fill="#E0B8CC" opacity=".5"/></svg>
+  <svg class="petal" viewBox="0 0 40 40" style="width:54px;bottom:12%;right:13%;animation-delay:2s"><use href="#petalG" fill="#C9A8D2" opacity=".4"/></svg>
+  <div class="wrap" style="position:relative;z-index:1">
+    <p class="quote serif">상실의 고통을 숫자로 계산할 수 있다면,<br>나는 조금이라도 덜 아플까.</p>
+    <h1>너와 함께한 날들</h1>
+    <p class="by">백인자 시집</p>
+    <p class="days serif">5,765일의 동행, 그리고 이별 후 마주한 정답 없는 방정식</p>
+    <div class="btns">
+      <a class="btn btn-p" href="#letter-svc">아이의 답장 받기 🐾</a>
+      <a class="btn btn-o" href="#buy">시집 만나보기</a>
+    </div>
+  </div>
+</section>
+
+<!-- BOOK -->
+<section id="book">
+  <div class="wrap">
+    <h2 class="sec reveal">어떤 공식으로도 풀 수 없던 슬픔</h2>
+    <p class="sec-sub reveal">평생 숫자와 증명의 언어로 살아온 수학자가,<br>반려견 단비를 떠나보낸 뒤 처음으로 써 내려간 마음의 기록.</p>
+    <div class="points">
+      <div class="point reveal"><div class="n">하나</div><h3>숫자로 그려진 사랑</h3><p>16년, 5,765일. 함께한 시간을 하나하나 세어본 사람만이 쓸 수 있는, 가장 논리적이고 가장 다정한 애도.</p></div>
+      <div class="point reveal"><div class="n">둘</div><h3>치유는 배신이 아니다</h3><p>"내가 벌써 괜찮아져도 되나" — 이별 뒤에 남는 죄책감에게, 이 시집은 조용히 말합니다. 웃어도 된다고.</p></div>
+      <div class="point reveal"><div class="n">셋</div><h3>재촉하지 않는 여백</h3><p>슬픔에는 정답도 마감도 없습니다. 각자의 속도로 머물 수 있도록, 시와 시 사이에 넉넉한 자리를 두었습니다.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 아이의 답장 -->
+<section id="letter-svc">
+  <div class="wrap">
+    <h2 class="sec reveal">아이의 답장</h2>
+    <p class="sec-sub reveal">작가는 단비에게 5,765일의 편지를 썼습니다.<br>이번엔, 당신의 아이가 보내는 답장을 받아보세요.</p>
+
+    <div class="svc-box">
+      <!-- intro -->
+      <div id="sIntro">
+        <svg class="paw" viewBox="0 0 24 24" fill="#C98DA6" style="width:28px;height:28px"><use href="#pawIcon"/></svg>
+        <p class="serif" style="font-size:21px;color:var(--plum);line-height:1.6;margin:14px 0 26px">만약 그 아이가<br>당신에게 답장을 쓸 수 있다면</p>
+        <button class="btn btn-p" onclick="go('sForm')">답장 받으러 가기</button>
+        <p class="note">사진과 이야기는 어디에도 저장되지 않습니다.</p>
+      </div>
+
+      <!-- form -->
+      <div id="sForm" class="hidden" style="text-align:left">
+        <div class="row2">
+          <label class="f" style="flex:1">아이의 이름 <input id="fName" placeholder="예) 초코"></label>
+          <label class="f" style="width:140px">아이가 부르던 호칭
+            <select id="fCaller"><option>엄마</option><option>아빠</option><option>언니</option><option>누나</option><option>형</option><option>오빠</option></select>
+          </label>
+        </div>
+        <label class="f">처음 만난 날 <input type="date" id="fDate"></label>
+        <label class="f">아이와 가장 행복했던 기억 하나
+          <textarea id="fMemory" rows="2" placeholder="예) 매주 토요일 한강 산책, 치킨 냄새만 나면 달려오던 모습"></textarea>
+        </label>
+        <label class="f">혹시, 아이에게 미안한 마음이 남아 있나요? <span style="color:var(--soft)">(선택)</span>
+          <textarea id="fRegret" rows="2" placeholder="쓰지 않아도 괜찮습니다"></textarea>
+        </label>
+        <label class="f">아이의 사진 <span style="color:var(--soft)">(선택 · 저장되지 않습니다)</span>
+          <div class="upload" id="upBox" onclick="document.getElementById('fPhoto').click()">사진 올리기</div>
+          <input type="file" id="fPhoto" accept="image/*" class="hidden">
+        </label>
+        <button class="btn btn-p" id="goBtn" style="width:100%" disabled onclick="generate()">답장 받기</button>
+      </div>
+
+      <!-- writing -->
+      <div id="sWriting" class="hidden">
+        <div style="display:flex;gap:10px;justify-content:center;margin-bottom:22px">
+          <svg class="paw" viewBox="0 0 24 24" fill="#C98DA6" style="animation:pulse 1.4s ease 0s infinite"><use href="#pawIcon"/></svg>
+          <svg class="paw" viewBox="0 0 24 24" fill="#C98DA6" style="animation:pulse 1.4s ease .35s infinite"><use href="#pawIcon"/></svg>
+          <svg class="paw" viewBox="0 0 24 24" fill="#C98DA6" style="animation:pulse 1.4s ease .7s infinite"><use href="#pawIcon"/></svg>
+        </div>
+        <p class="serif" id="wMsg" style="font-size:19px;color:var(--plum)">답장을 쓰고 있어요…</p>
+      </div>
+
+      <!-- letter -->
+      <div id="sLetter" class="hidden">
+        <div class="card-l">
+          <div class="photo-c hidden" id="cPhoto"></div>
+          <p class="cn" id="cName"></p>
+          <p class="cd" id="cDays"></p>
+          <svg class="paw" viewBox="0 0 24 24" fill="#C98DA6" style="width:18px;height:18px"><use href="#pawIcon"/></svg>
+          <div id="llines"></div>
+        </div>
+        <div id="after" class="hidden">
+          <p class="bridge">이 마음을 5,765일 동안 겪은 사람이 있습니다.<br>수학자 백인자가 단비에게 쓴 답장들,<br><b>『너와 함께한 날들』</b></p>
+          <div class="acts">
+            <button class="a1" onclick="downloadCard()">답장 간직하기</button>
+            <button class="a2" onclick="alert('가안 데모: 실서비스에서 카카오톡 공유 연결 — 같은 이별을 겪은 친구에게 1:1 전달')">친구에게 보내기</button>
+            <button class="a3" onclick="document.getElementById('buy').scrollIntoView()">시집 만나보기</button>
+          </div>
+          <button class="reset" onclick="resetSvc()">처음부터 다시</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AUTHOR -->
+<section id="author">
+  <div class="wrap">
+    <h2 class="sec reveal">작가의 서재</h2>
+    <p class="sec-sub reveal">수학자 백인자</p>
+    <div class="author-grid reveal">
+      <div class="portrait">작가 프로필 사진<br>(가안 자리)</div>
+      <div>
+        <h3>백인자</h3>
+        <p class="role">MATHEMATICIAN · AUTHOR</p>
+        <p class="bio">평생을 수학의 언어로 세계를 탐구해 온 학자. 서울대학교 수학과를 졸업하고 미국에서 응용수학으로 박사 학위를 받았다.</p>
+        <p class="bio">16년을 함께한 반려견 단비를 떠나보낸 뒤, 어떤 공식으로도 해를 구할 수 없는 슬픔 앞에서 처음으로 '마음의 글'을 쓰기 시작했다. 슬플 때마다 적어 내려간 시들이 모여 한 권의 책이 되었다.</p>
+        <div class="bookshelf">
+          <div class="bk"><div class="t">너와 함께한 날들</div><div class="s">시집 · 2026 · 일본판 출간 예정</div></div>
+          <div class="bk" style="opacity:.55"><div class="t">다음 이야기</div><div class="s">이곳에 차곡차곡 쌓입니다</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- REVIEWS / PRESS -->
+<section id="press">
+  <div class="wrap">
+    <h2 class="sec reveal">독자의 마음</h2>
+    <p class="sec-sub reveal">같은 이별을 지나온 사람들이 남긴 말들</p>
+    <div class="reviews">
+      <div class="rv reveal"><q>떠나보낸 우리 아이 생각에 한 페이지마다 멈춰 서서 읽었습니다. 위로가 뭔지 처음 알았어요.</q><div class="who">— 독자 리뷰 (가안 예시)</div></div>
+      <div class="rv reveal"><q>반려동물뿐 아니라, 사랑하는 존재를 잃어본 모든 사람에게 닿는 책입니다.</q><div class="who">— 독자 리뷰 (가안 예시)</div></div>
+      <div class="rv reveal"><q>친구가 강아지를 떠나보냈을 때 무슨 말을 해야 할지 몰랐는데, 이 책을 대신 건넸습니다.</q><div class="who">— 독자 리뷰 (가안 예시)</div></div>
+    </div>
+    <p class="press-note reveal">언론 보도 — 곧 이 자리에 기사들이 채워집니다. (PR 진행 예정)</p>
+  </div>
+</section>
+
+<!-- BUY -->
+<section id="buy">
+  <div class="wrap">
+    <h2 class="sec reveal">곁에 두고 싶은 위로</h2>
+    <p class="sec-sub reveal">나를 위해, 혹은 같은 이별을 겪은 소중한 사람을 위해</p>
+    <div class="reveal">
+      <a class="btn btn-w" href="https://search.kyobobook.co.kr/search?keyword=%EB%84%88%EC%99%80%20%ED%95%A8%EA%BB%98%ED%95%9C%20%EB%82%A0%EB%93%A4%20%EB%B0%B1%EC%9D%B8%EC%9E%90" target="_blank">교보문고에서 구매</a>
+      <a class="btn btn-w" href="https://search.shopping.naver.com/book/search?query=%EB%84%88%EC%99%80%20%ED%95%A8%EA%BB%98%ED%95%9C%20%EB%82%A0%EB%93%A4%20%EB%B0%B1%EC%9D%B8%EC%9E%90" target="_blank">네이버 도서에서 구매</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  백인자 작가 공식 홈페이지 (가안) · 기획·제작 열정의시간<br>
+  본 페이지는 제안용 데모이며, 모든 입력 정보와 사진은 저장되지 않습니다.
+</footer>
+
+<script>
+// scroll reveal
+const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) e.target.classList.add('on'); }), { threshold:.15 });
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+// ── 아이의 답장 ──
+let photoData = null, days = 0, letterArr = [];
+function go(id) {
+  ['sIntro','sForm','sWriting','sLetter'].forEach(s => document.getElementById(s).classList.add('hidden'));
+  document.getElementById(id).classList.remove('hidden');
+}
+['fName','fDate','fMemory'].forEach(id => document.getElementById(id).addEventListener('input', check));
+function check() {
+  const ok = fName.value.trim() && fDate.value && fMemory.value.trim();
+  document.getElementById('goBtn').disabled = !ok;
+  document.getElementById('goBtn').textContent = (fName.value.trim()||'아이') + '의 답장 받기';
+}
+document.getElementById('fPhoto').addEventListener('change', e => {
+  const f = e.target.files[0]; if (!f) return;
+  const r = new FileReader();
+  r.onload = () => { photoData = r.result; const u = document.getElementById('upBox'); u.textContent='사진이 준비됐어요 ✓'; u.classList.add('ok'); };
+  r.readAsDataURL(f);
+});
+
+function buildLetter(name, caller, memory, regret) {
+  // 데모용 템플릿 엔진 (실서비스에선 AI 생성으로 교체)
+  const mem = memory.length > 26 ? memory.slice(0, 26) + '…' : memory;
+  const L = [];
+  L.push(`${caller}, 나야 ${name}.`);
+  L.push(`나, "${mem}" 그 날들 전부 기억해.`);
+  L.push(`정말 행복했어. ${days.toLocaleString()}일 내내.`);
+  if (regret) L.push(`그리고 그 일은 ${caller} 잘못이 아니야. 정말이야.`);
+  L.push(`이제 웃어도 돼. 그게 나를 잊는 게 아니니까.`);
+  L.push(`${caller}, 밥 잘 챙겨 먹어. 내 몫까지.`);
+  return L.slice(0, 6);
+}
+
+async function generate() {
+  const name = fName.value.trim(), caller = fCaller.value, memory = fMemory.value.trim(), regret = fRegret.value.trim();
+  days = Math.floor((Date.now() - new Date(fDate.value).getTime())/86400000) + 1;
+  if (days <= 0) { alert('날짜를 확인해주세요'); return; }
+  document.getElementById('wMsg').textContent = name + (photoData ? '가 사진을 보며' : '가') + ' 답장을 쓰고 있어요…';
+  go('sWriting');
+  const t0 = Date.now();
+  try {
+    // claude.ai 아티팩트 환경에서만 동작 — 공개 데모에선 템플릿 폴백
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ model:'claude-sonnet-4-6', max_tokens:1000, messages:[{role:'user', content:
+`무지개다리를 건넌 반려견 ${name}이(가) 보호자(호칭:${caller})에게 보내는 답장. 함께한 날 ${days}일. 행복했던 기억: ${memory}. ${regret? '보호자가 미안해하는 것: '+regret+'. 이에 대해 네 잘못이 아니라는 면죄부 필수.':''} 따뜻한 반말 5~6줄, 한 줄 25자 이내. 구조: 기억 회상→면죄부/안심→웃어도 돼→여운. 의료판단·사인언급·종교표현·신파 금지. 본문만 줄바꿈 구분.`}] })
+    });
+    if (!res.ok) throw 0;
+    const data = await res.json();
+    const text = (data.content||[]).filter(b=>b.type==='text').map(b=>b.text).join('\n');
+    letterArr = text.split('\n').map(s=>s.trim()).filter(Boolean).slice(0,6);
+    if (!letterArr.length) throw 0;
+  } catch { letterArr = buildLetter(name, caller, memory, regret); }
+  setTimeout(showLetter, Math.max(0, 2400 - (Date.now()-t0)));
+}
+
+function showLetter() {
+  document.getElementById('cName').textContent = fName.value.trim() + '와 함께한 날들';
+  document.getElementById('cDays').innerHTML = days.toLocaleString() + '<span>일</span>';
+  if (photoData) { const pc = document.getElementById('cPhoto'); pc.style.backgroundImage = 'url('+photoData+')'; pc.classList.remove('hidden'); }
+  go('sLetter');
+  document.getElementById('sLetter').scrollIntoView({block:'center'});
+  const box = document.getElementById('llines'); box.innerHTML = '';
+  letterArr.forEach((l, i) => setTimeout(() => {
+    const pe = document.createElement('p'); pe.textContent = l; box.appendChild(pe);
+    if (i === letterArr.length - 1) setTimeout(() => document.getElementById('after').classList.remove('hidden'), 700);
+  }, i * 1100));
+}
+function resetSvc() {
+  photoData = null; letterArr = [];
+  document.getElementById('after').classList.add('hidden');
+  document.getElementById('cPhoto').classList.add('hidden');
+  const u = document.getElementById('upBox'); u.textContent='사진 올리기'; u.classList.remove('ok');
+  ['fName','fMemory','fRegret','fDate','fPhoto'].forEach(id=>document.getElementById(id).value='');
+  check(); go('sIntro');
+  document.getElementById('letter-svc').scrollIntoView();
+}
+
+function downloadCard() {
+  const name = fName.value.trim();
+  const W=1080, H=1500;
+  const cv=document.createElement('canvas'); cv.width=W; cv.height=H;
+  const ctx=cv.getContext('2d');
+  const g=ctx.createLinearGradient(0,0,W,H);
+  g.addColorStop(0,'#FCF6F8'); g.addColorStop(.5,'#F4E6EE'); g.addColorStop(1,'#E6D6EA');
+  ctx.fillStyle=g; ctx.fillRect(0,0,W,H);
+  const drawTexts=()=>{
+    ctx.textAlign='center';
+    const baseY = photoData ? 760 : 420;
+    ctx.fillStyle='#6D2E46'; ctx.font="600 52px 'Noto Serif KR',serif";
+    ctx.fillText(name+'와 함께한 날들', W/2, baseY);
+    ctx.fillStyle='#4A2E44'; ctx.font="700 110px 'Noto Serif KR',serif";
+    ctx.fillText(days.toLocaleString()+'일', W/2, baseY+130);
+    ctx.font="400 38px 'Noto Serif KR',serif"; ctx.fillStyle='#5A3E54';
+    let y=baseY+240; letterArr.forEach(l=>{ ctx.fillText(l, W/2, y); y+=60; });
+    ctx.font="300 28px 'Noto Sans KR',sans-serif"; ctx.fillStyle='#8A6B85';
+    ctx.fillText('백인자 시집 『너와 함께한 날들 — 5,765일』', W/2, H-110);
+    ctx.font="300 24px 'Noto Sans KR',sans-serif"; ctx.fillStyle='#A98BA4';
+    ctx.fillText(name+'의 답장 받기 · 백인자 작가 홈페이지', W/2, H-64);
+    const a=document.createElement('a'); a.download=name+'의_답장_'+days+'일.png'; a.href=cv.toDataURL('image/png'); a.click();
+  };
+  if (photoData) {
+    const im=new Image();
+    im.onload=()=>{ const r=230,cx=W/2,cy=380;
+      ctx.save(); ctx.beginPath(); ctx.arc(cx,cy,r+12,0,Math.PI*2); ctx.fillStyle='#fff'; ctx.fill();
+      ctx.beginPath(); ctx.arc(cx,cy,r,0,Math.PI*2); ctx.clip();
+      const s=Math.max(r*2/im.width, r*2/im.height);
+      ctx.drawImage(im, cx-im.width*s/2, cy-im.height*s/2, im.width*s, im.height*s);
+      ctx.restore(); drawTexts(); };
+    im.src=photoData;
+  } else drawTexts();
+}
+</script>
+</body>
+</html>
