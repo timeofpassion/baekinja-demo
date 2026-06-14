@@ -192,7 +192,7 @@ footer { background:var(--plum-d); color:#B98AA0; text-align:center; padding:34p
         <div class="row2">
           <label class="f" style="flex:1">아이의 이름 <input id="fName" placeholder="예) 초코"></label>
           <label class="f" style="width:140px">아이가 부르던 호칭
-            <select id="fCaller"><option>엄마</option><option>아빠</option><option>언니</option><option>누나</option><option>형</option><option>오빠</option></select>
+            <input id="fCaller" placeholder="예) 엄마, 아빠, 누나">
           </label>
         </div>
         <label class="f">처음 만난 날 <input type="date" id="fDate"></label>
@@ -340,7 +340,7 @@ function buildLetter(name, caller, memory, regret) {
 }
 
 async function generate() {
-  const name = fName.value.trim(), caller = fCaller.value, memory = fMemory.value.trim(), regret = fRegret.value.trim();
+  const name = fName.value.trim(), caller = fCaller.value.trim() || '엄마', memory = fMemory.value.trim(), regret = fRegret.value.trim();
   days = Math.floor((Date.now() - new Date(fDate.value).getTime())/86400000) + 1;
   if (days <= 0) { alert('날짜를 확인해주세요'); return; }
   document.getElementById('wMsg').textContent = name + (photoData ? '가 사진을 보며' : '가') + ' 답장을 쓰고 있어요…';
@@ -379,7 +379,7 @@ function resetSvc() {
   document.getElementById('after').classList.add('hidden');
   document.getElementById('cPhoto').classList.add('hidden');
   const u = document.getElementById('upBox'); u.textContent='사진 올리기'; u.classList.remove('ok');
-  ['fName','fMemory','fRegret','fDate','fPhoto'].forEach(id=>document.getElementById(id).value='');
+  ['fName','fCaller','fMemory','fRegret','fDate','fPhoto'].forEach(id=>document.getElementById(id).value='');
   check(); go('sIntro');
   document.getElementById('letter-svc').scrollIntoView();
 }
